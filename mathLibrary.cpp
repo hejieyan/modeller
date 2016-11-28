@@ -138,21 +138,21 @@ Point2D* movePoint(Point2D* point, Vector2D* vector) {
 //3D point class
 //constructors
 Point3D::Point3D(){
-  this->x = 0.0;
-  this->y = 0.0;
-  this->z = 0.0;
+    this->x = 0.0;
+    this->y = 0.0;
+    this->z = 0.0;
 }
 
 Point3D::Point3D(float x, float y, float z){
-  this->x = x;
-  this->y = y;
-  this->z = z;
+    this->x = x;
+    this->y = y;
+    this->z = z;
 }
 
 //calculate the length of this vector and update its length variable
 float Vector3D::calculateLength(){
-  this->length = sqrt(pow(this->x,2)+pow(this->y,2)+pow(this->z,2));
-  return this->length;
+    this->length = sqrt(pow(this->x,2)+pow(this->y,2)+pow(this->z,2));
+    return this->length;
 }
 
 //constructors
