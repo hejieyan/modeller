@@ -15,7 +15,7 @@ Point2D::Point2D(int x, int y) {
 }
 
 void Point2D::printValue() {
-    printf("x = %f, y = %f \n", x, y);
+    printf("x = %i, y = %i \n", x, y);
 }
 
 int Point2D::getX() {

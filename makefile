@@ -40,7 +40,7 @@ endif
 # $(PROGRAM_NAME): robot.o mathLibrary.o
 # 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-modeller: modeller.o mathLibrary.o sceneGraph.o sceneObject.o
+modeller: modeller.o mathLibrary.o sceneGraph.o sceneObject.o transformationNode.o
 	$(CC) -o Modeller.x $^ $(CFLAGS) $(LDFLAGS)
 
 clean:
