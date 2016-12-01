@@ -3,11 +3,12 @@
 
 #include "mathLibrary.h"
 #include "sceneGraph.h"
+#include "transformationNode.h"
 
 // Private variables (encapsulation)
 
 // Type aliases - can replace Point3D with other two
-typedef Point3D Orientation3D, Scale3D;
+// typedef TransformationNode TranslationNode, OrientationNode,RotationNode, ScaleNode;
 
 enum ObjectType {
 	// Solid Shapes are 0-8, adding 10 gives the wireframe version
@@ -29,42 +30,59 @@ enum ObjectType {
 	OBJECT_WIRE_OCTAHEDRON,
 	OBJECT_WIRE_TETRAHEDRON,
 	OBJECT_WIRE_ICOSAHEDRON,
-	OBJECT_WIRE_TEAPOT;
-}
+	OBJECT_WIRE_TEAPOT
+};
+
+
+
+
+class SceneObject: public SceneGraphNode {
+	protected:
+		//float objectSize = 1;
+		Point3D objPosition;
+		TransformationNode *objTranslate;
+		TransformationNode *objOrientation;
+		TransformationNode *objRotation;
+		TransformationNode *objScale;
+		ObjectType objType;
+		//Material objMaterial;
+		//Light objLight;
+		//BoundingBox *objBox;
+
+
+
+	public:
+		SceneObject();
+		//~SceneObject();
+
+		ObjectType getObjType();
+
+		//virtual void update();
+
+		void changeMaterial(Material changeMat);
+		void changeObjType(ObjectType changeObj);
+
+};
+
+
 
 class BoundingBox: public SceneObject {
 	private:
-		calculateMinMax(Point3D objectCenter);
+		void calculateMinMax(SceneObject* sceneObject);
 
 	protected:
 		float minX, maxX,
 				minY, maxY,
 				minZ, maxZ;
+		Point3D min, max;
 
 		float centerX, centerY, centerZ;
 
 	public:
 		BoundingBox(SceneObject* sceneObject);
-		~BoudningBox();
-		virtual void update();
-}
-
-class SceneObject: public SceneGraphNode {
-	protected:
-		float objectSize = 1;
-		Point3D objectNodePosition;
-		Orientation3D objectNodeOrientation;
-		Scale3D objectNodeScale;
-
-	public:
-		SceneObject();
-		~SceneObject();
-		virtual void update();
-}
-
-
-
-
+		//~BoundingBox();
+		//virtual void update();
+};
 
 
 #endif
