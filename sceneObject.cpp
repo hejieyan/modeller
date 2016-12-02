@@ -29,6 +29,7 @@ SceneObject::SceneObject(int ID, Point3D objPosition,
 	this-> objRotation = objRotation;
 	this-> objScale = objScale;
 	this-> objType = objType;
+	this-> highlight = false;
 
 	
 }

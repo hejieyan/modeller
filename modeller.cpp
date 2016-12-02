@@ -25,7 +25,7 @@ Material material0 = {
 };
 int ID = 0;
 Point3D sendPos;
-TransformationNode *sendTranslate, *sendOrientation, *sendRotation, *sendScale;
+TransformationNode *translationNode, *orientationNode, *rotationNode, *scaleNode;
 
 SceneGraph *sceneGraph;
 
@@ -53,7 +53,7 @@ void insertObject(ObjectType model){
 							rotationNode,
 							scaleNode, 
 							model);
- 	sceneGraph->append(newID, *sceneObjectPointer);
+ 	sceneGraph->append(newID, sceneObjectPointer);
 
  	//TODO:Destructor for sceneObjectPointer
 
@@ -80,7 +80,7 @@ void display() {
 			glutSolidCube(1);
 	}
 	insertObject(OBJECT_WIRE_TEAPOT);
-	sceneObjectPointer
+	//sceneObjectPointer
 	switch(sceneObjectPointer->objType){
 		case OBJECT_SOLID_CUBE:
 			glutSolidCube(1);

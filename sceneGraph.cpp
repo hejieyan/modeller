@@ -23,8 +23,8 @@ void SceneGraph::topMost(){
 	currentNode = root;
 }
 
-void SceneGraph::append(int ID, SceneObject addSceneObject){
-	sceneTree.push_back(addSceneObject);
+void SceneGraph::append(int ID, SceneObject *addSceneObject){
+	sceneTree.push_back(*addSceneObject);
 	node* child = new node;
 	child->id = ID;
 	currentNode = child;

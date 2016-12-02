@@ -40,12 +40,12 @@ class SceneObject {
 	protected:
 		//float objectSize = 1;
 		int ID;
+		bool  highlight;
 		Point3D objPosition;
 		TransformationNode *objTranslate;
 		TransformationNode *objOrientation;
 		TransformationNode *objRotation;
 		TransformationNode *objScale;
-		ObjectType objType;
 		//Material objMaterial;
 		//Light objLight;
 		//BoundingBox *objBox;
@@ -53,6 +53,7 @@ class SceneObject {
 
 
 	public:
+		ObjectType objType;
 		SceneObject(int ID, Point3D objposition, 
 							TransformationNode *objTranslate,
 							TransformationNode *objOrientation,

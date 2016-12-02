@@ -7,6 +7,9 @@ enum transType{
 };
 
 class TransformationNode{
+	private:
+		
 	public:
+		TransformationNode(transType transformation);
 		TransformationNode(transType transformation, Point3D *factor);
 };
