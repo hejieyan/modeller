@@ -16,7 +16,6 @@
 #  include <GL/freeglut.h>
 #endif
 
-
 Material material0 = {
 	{0.33, 0.22, 0.03, 1.0},	// Ambient
 	{0.78, 0.57, 0.11, 1.0},	// Diffuse
@@ -24,18 +23,39 @@ Material material0 = {
 	{0, 0, 0, 1},				// Emission
 	27.8						// Shininess
 };
+int ID = 0;
+Point3D sendPos;
+TransformationNode *sendTranslate, *sendOrientation, *sendRotation, *sendScale;
 
-//SceneGraphNode *nodeScene;
+SceneGraph *sceneGraph;
 
-SceneObject *sceneObject0;
+SceneObject *sceneObjectPointer;
 
-void insertObject(){
+int getCurrentID(){
+	return ++ID;
+}
+void insertObject(ObjectType model){
 	//nodeScene->AddChild();
+	int newID = getCurrentID();
+	sceneGraph->topMost();
+	Point3D *temp = new Point3D(0,0,0);
+	sendPos = *temp;
 
-	sceneObject0 = new SceneObject();
- 
+	translationNode = new TransformationNode(translate);
+	orientationNode = new TransformationNode(rotate);
+	rotationNode = new TransformationNode(rotate);
+	scaleNode = new TransformationNode(scale);
 
+	// objType = OBJECT_SOLID_CUBE;
 
+	sceneObjectPointer = new SceneObject(newID, sendPos, translationNode,
+							orientationNode,
+							rotationNode,
+							scaleNode, 
+							model);
+ 	sceneGraph->append(newID, *sceneObjectPointer);
+
+ 	//TODO:Destructor for sceneObjectPointer
 
 }
 // MARK: Callback Functions
@@ -47,15 +67,35 @@ void display() {
 
 	// glLoadIdentity();
 	glColor3f(1,0,0);
-	//glutWireTeapot(0.5);
-	ObjectType getObj = sceneObject0->getObjType();
 
-	switch (getObj){
-		case (OBJECT_SOLID_CUBE):
-			printf("Solid cube\n");
+	insertObject(OBJECT_SOLID_CUBE);
+	switch(sceneObjectPointer->objType){
+		case OBJECT_SOLID_CUBE:
 			glutSolidCube(1);
-			break;
 	}
+	insertObject(OBJECT_SOLID_SPHERE);
+
+	switch(sceneObjectPointer->objType){
+		case OBJECT_SOLID_CUBE:
+			glutSolidCube(1);
+	}
+	insertObject(OBJECT_WIRE_TEAPOT);
+	sceneObjectPointer
+	switch(sceneObjectPointer->objType){
+		case OBJECT_SOLID_CUBE:
+			glutSolidCube(1);
+	}
+	//glutWireTeapot(0.5);
+	//ObjectType getObj = sceneObjectPointer->getObjType();
+	
+
+	// switch (getObj){
+	// 	case (OBJECT_SOLID_CUBE):
+	// 		printf("Solid cube\n");
+	// 		insertObject(OBJECT_SOLID_CUBE);
+	// 		glutSolidCube(1);
+	// 		break;
+	//}
 	glutSwapBuffers();
 }
 
@@ -72,7 +112,7 @@ void reshape(int width, int height) {
 }
 
 int initCallbacks() {
-	insertObject();
+	sceneGraph = new SceneGraph();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 }

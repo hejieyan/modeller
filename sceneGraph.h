@@ -12,50 +12,35 @@
 #endif
 
 #include <list>
+#include <vector>
+#include "sceneObject.h"
 // TODO: Private variables (encapsulation)
 
 
 using namespace std;
 
-class SceneGraphNode {
-	public:
-		// Constructor
-		SceneGraphNode() {
-		}
-		// Release object from memory
-		void release() {
-			delete this;
-		}
-		// Destroy all the children
-		void destroy() {
-			for (list<SceneGraphNode*>::iterator childNode = childrenList.begin();
-					childNode != childrenList.end(); childNode++) {
-				(*childNode)->release();
-			}
-			childrenList.clear();
-		}
-		// Destructor
-		virtual ~SceneGraphNode() {
-			destroy();
-		}
-		
-		// Update scene node
-		virtual void update() {
-			// loop through list and update children
-			for (list<SceneGraphNode*>::iterator childNode = childrenList.begin(); 
-					childNode != childrenList.end(); childNode++) {
-				(*childNode)->update();
-			}
-		}
-		
-		// Add child node to the current node
-		void AddChild (SceneGraphNode* parentNode) {
-			childrenList.push_back(parentNode);
-		}
+struct node{
+	int id;
+	//transType tranformType;
+	node *next;
+};
 
+class SceneGraph {
+	private:
+		node *root;
+		node *currentNode;
+		// int listLength;
+
+
+	public:
+		SceneGraph();
+		void topMost();
+		void append(int ID, SceneObject *addScene);
+
+		
 	protected:
-		// List of children nodes
-		list<SceneGraphNode*> childrenList;
+		vector<SceneObject> sceneTree;
+
 };
 
 #endif
