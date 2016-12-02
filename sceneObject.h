@@ -2,7 +2,7 @@
 #define SCENEOBJECT_H
 
 #include "mathLibrary.h"
-#include "sceneGraph.h"
+//#include "sceneGraph.h"
 #include "transformationNode.h"
 
 // Private variables (encapsulation)
@@ -36,9 +36,10 @@ enum ObjectType {
 
 
 
-class SceneObject: public SceneGraphNode {
+class SceneObject {
 	protected:
 		//float objectSize = 1;
+		int ID;
 		Point3D objPosition;
 		TransformationNode *objTranslate;
 		TransformationNode *objOrientation;
@@ -52,12 +53,15 @@ class SceneObject: public SceneGraphNode {
 
 
 	public:
-		SceneObject();
+		SceneObject(int ID, Point3D objposition, 
+							TransformationNode *objTranslate,
+							TransformationNode *objOrientation,
+							TransformationNode *objRotation,
+							TransformationNode *objScale, 
+							ObjectType objType);
 		//~SceneObject();
 
 		ObjectType getObjType();
-
-		//virtual void update();
 
 		void changeMaterial(Material changeMat);
 		void changeObjType(ObjectType changeObj);
@@ -79,7 +83,6 @@ class BoundingBox: public SceneObject {
 		float centerX, centerY, centerZ;
 
 	public:
-		BoundingBox(SceneObject* sceneObject);
 		//~BoundingBox();
 		//virtual void update();
 };
