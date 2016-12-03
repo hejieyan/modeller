@@ -16,6 +16,11 @@
 #  include <GL/freeglut.h>
 #endif
 
+/*STILL TO DO*/
+//Make proper transformation Node
+//Implement every transformation
+//Ray-Picking
+
 Material material0 = {
 	{0.33, 0.22, 0.03, 1.0},	// Ambient
 	{0.78, 0.57, 0.11, 1.0},	// Diffuse
@@ -24,8 +29,8 @@ Material material0 = {
 	27.8						// Shininess
 };
 int ID = 0;
-Point3D sendPos;
-TransformationNode *sendTranslate, *sendOrientation, *sendRotation, *sendScale;
+Point3D *sendPos, *sendScale;
+TransformationNode *translationNode, *orientationNode, *rotationNode, *scaleNode;
 
 SceneGraph *sceneGraph;
 
@@ -38,26 +43,92 @@ void insertObject(ObjectType model){
 	//nodeScene->AddChild();
 	int newID = getCurrentID();
 	sceneGraph->topMost();
-	Point3D *temp = new Point3D(0,0,0);
-	sendPos = *temp;
+	
+	sendPos = new Point3D(0,0,0);
+	sendScale = new Point3D(1,1,1);
 
-	translationNode = new TransformationNode(translate);
-	orientationNode = new TransformationNode(rotate);
-	rotationNode = new TransformationNode(rotate);
-	scaleNode = new TransformationNode(scale);
+	translationNode = new TransformationNode(TRANSLATE_OBJECT);
+	orientationNode = new TransformationNode(ROTATE_OBJECT);
+	rotationNode = new TransformationNode(ROTATE_OBJECT);
+	scaleNode = new TransformationNode(SCALE_OBJECT);
 
 	// objType = OBJECT_SOLID_CUBE;
 
 	sceneObjectPointer = new SceneObject(newID, sendPos, translationNode,
 							orientationNode,
 							rotationNode,
-							scaleNode, 
+							sendScale,
 							model);
- 	sceneGraph->append(newID, *sceneObjectPointer);
+ 	sceneGraph->append(newID, sceneObjectPointer);
 
  	//TODO:Destructor for sceneObjectPointer
 
 }
+
+void updateObj(){
+	SceneObject *iterateObjects;
+	int i =0;
+	for(std::vector<SceneObject>::iterator it = sceneGraph->sceneTree.begin(); it != sceneGraph->sceneTree.end(); ++it) {
+		iterateObjects = &sceneGraph->sceneTree[i];
+		glPushMatrix();
+			glScalef(iterateObjects->objScale->x, iterateObjects->objScale->y, iterateObjects->objScale->z);
+			//printf("Item %d: %f, %f, %f\n", i, iterateObjects->objBox->far->x, iterateObjects->objBox->far->y, iterateObjects->objBox->far->z);
+			switch(iterateObjects->objType){
+				
+				case OBJECT_WIRE_CUBE:
+					glColor3f(1, 0, 0);
+					glutWireCube(1.5);
+					glColor3f(0, 1, 0);
+					glutWireCube(1);
+					break;
+				case OBJECT_WIRE_SPHERE:
+					glColor3f(1, 0, 0);
+					glutWireCube(2);
+					glColor3f(0, 1, 0);
+					glutWireSphere(1,50,50);
+					break;
+				}
+		glPopMatrix();
+		i++;
+		}
+		
+
+}
+
+void keyboard(unsigned char key, int xIn, int yIn)
+{
+	switch (key)
+	{
+		case 'q':
+			insertObject(OBJECT_WIRE_CUBE);
+
+			insertObject(OBJECT_WIRE_SPHERE);
+
+			break;
+
+		case 'w':
+			Point3D* object1Scale = sceneGraph->sceneTree[2].objScale;
+			object1Scale -> x = 3;
+			object1Scale -> y = 3;
+			object1Scale -> z = 3;
+
+			sceneGraph->sceneTree[2].objBox->scaleBox(object1Scale);
+
+			//TO-DO add transformation Nodes and Bounding box transformations
+			break;
+	}
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	updateObj();
+
+	
+	glutSwapBuffers();
+}
+
+
+
+
+
 // MARK: Callback Functions
 void display() {
 	// glClearColor(0,0,0,1); 
@@ -68,23 +139,11 @@ void display() {
 	// glLoadIdentity();
 	glColor3f(1,0,0);
 
-	insertObject(OBJECT_SOLID_CUBE);
-	switch(sceneObjectPointer->objType){
-		case OBJECT_SOLID_CUBE:
-			glutSolidCube(1);
-	}
-	insertObject(OBJECT_SOLID_SPHERE);
 
-	switch(sceneObjectPointer->objType){
-		case OBJECT_SOLID_CUBE:
-			glutSolidCube(1);
-	}
-	insertObject(OBJECT_WIRE_TEAPOT);
-	sceneObjectPointer
-	switch(sceneObjectPointer->objType){
-		case OBJECT_SOLID_CUBE:
-			glutSolidCube(1);
-	}
+
+	//SceneObject trial = sceneGraph->findChild(1);
+	//sceneTree(1)->objTranslate= 
+
 	//glutWireTeapot(0.5);
 	//ObjectType getObj = sceneObjectPointer->getObjType();
 	
@@ -115,6 +174,8 @@ int initCallbacks() {
 	sceneGraph = new SceneGraph();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboard);
+
 }
 
 int main(int argc,char** argv) {
@@ -129,7 +190,7 @@ int main(int argc,char** argv) {
 	// Setup perspective view
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-2.0, 2.0, -2.0, 2.0, -2.0, 2.0);
+	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
 	// gluPerspective(60, 1, 1, 10);
 	//glFrustum(-1.0, 1.0, -1.0, 1.0, 0.5, 3.0);
 	glMatrixMode(GL_MODELVIEW);

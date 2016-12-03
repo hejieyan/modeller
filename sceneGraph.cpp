@@ -23,9 +23,19 @@ void SceneGraph::topMost(){
 	currentNode = root;
 }
 
-void SceneGraph::append(int ID, SceneObject addSceneObject){
-	sceneTree.push_back(addSceneObject);
+void SceneGraph::append(int ID, SceneObject *addSceneObject){
+	//topMost();
+	sceneTree.push_back(*addSceneObject);
 	node* child = new node;
 	child->id = ID;
 	currentNode = child;
 }
+
+// SceneObject SceneGraph::findChild(int findID){
+// 	for(vector<SceneObject>::iterator it = sceneTree.begin(); it != sceneTree.end(); ++it) {
+// 		if (it->ID == findID){
+// 			return it;
+// 		}
+// 	}
+// 	return 0;
+// }
