@@ -4,6 +4,7 @@
 #include "mathLibrary.h"
 //#include "sceneGraph.h"
 #include "transformationNode.h"
+#include "boundingBox.h"
 
 // Private variables (encapsulation)
 
@@ -39,13 +40,15 @@ enum ObjectType {
 class SceneObject {
 	protected:
 		//float objectSize = 1;
-		int ID;
+		
 		bool  highlight;
-		Point3D objPosition;
+		
+		Point3D *objPosition;
 		TransformationNode *objTranslate;
 		TransformationNode *objOrientation;
 		TransformationNode *objRotation;
-		TransformationNode *objScale;
+		
+		
 		//Material objMaterial;
 		//Light objLight;
 		//BoundingBox *objBox;
@@ -53,14 +56,19 @@ class SceneObject {
 
 
 	public:
+		int ID;
+		Point3D *objScale;
 		ObjectType objType;
-		SceneObject(int ID, Point3D objposition, 
+		BoundingBox *objBox;
+
+		SceneObject(int ID, Point3D *objPosition, 
 							TransformationNode *objTranslate,
 							TransformationNode *objOrientation,
 							TransformationNode *objRotation,
-							TransformationNode *objScale, 
+							Point3D *objScale, 
 							ObjectType objType);
 		//~SceneObject();
+		//void updateObj();
 
 		ObjectType getObjType();
 
@@ -71,22 +79,22 @@ class SceneObject {
 
 
 
-class BoundingBox: public SceneObject {
-	private:
-		void calculateMinMax(SceneObject* sceneObject);
+// class BoundingBox: public SceneObject {
+// 	private:
+// 		void calculateMinMax(SceneObject* sceneObject);
 
-	protected:
-		float minX, maxX,
-				minY, maxY,
-				minZ, maxZ;
-		Point3D min, max;
+// 	protected:
+// 		float minX, maxX,
+// 				minY, maxY,
+// 				minZ, maxZ;
+// 		Point3D min, max;
 
-		float centerX, centerY, centerZ;
+// 		float centerX, centerY, centerZ;
 
-	public:
-		//~BoundingBox();
-		//virtual void update();
-};
+// 	public:
+// 		//~BoundingBox();
+// 		//virtual void update();
+// };
 
 
 #endif

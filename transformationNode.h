@@ -1,9 +1,9 @@
 #include "mathLibrary.h"
 
 enum transType{
-	scale,
-	translate,
-	rotate
+	SCALE_OBJECT,
+	TRANSLATE_OBJECT,
+	ROTATE_OBJECT
 };
 
 class TransformationNode{
@@ -12,4 +12,5 @@ class TransformationNode{
 	public:
 		TransformationNode(transType transformation);
 		TransformationNode(transType transformation, Point3D *factor);
+		void transform(Point3D scale);
 };

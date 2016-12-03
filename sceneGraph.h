@@ -36,10 +36,12 @@ class SceneGraph {
 		SceneGraph();
 		void topMost();
 		void append(int ID, SceneObject *addScene);
+		//SceneObject findChild(int findID);
+		vector<SceneObject> sceneTree;
 
 		
 	protected:
-		vector<SceneObject> sceneTree;
+		
 
 };
 
