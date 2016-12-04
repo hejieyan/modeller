@@ -2,34 +2,31 @@
 #include <iostream>
 #include "transformationNode.h"
 
-TransformationNode::TransformationNode(transType transformation){
+//constructor to save default values in each scene object
+TransformationNode::TransformationNode(transType transformation){ 
 	switch (transformation){
 		case SCALE_OBJECT:
-			glScalef(1,1,1);
+			this->scaleValue = new Point3D(1,1,1);
 			break;
 
 		case TRANSLATE_OBJECT:
-			glTranslatef(0,0,0);
+			this->tranValue = new Point3D(0,0,0);
 			break;
 
 		case ROTATE_OBJECT:
-			glRotatef(0, 1,0,0);
-			glRotatef(0, 0,1,0);
-			glRotatef(0, 0,0,1);
+			this->rotateValue = new Point3D(0,0,0);
 			break;
 	}
 }
 
-void TransformationNode::transform(Point3D scale){
-	glScalef(scale.x, scale.y, scale.z);
-}
+//make transformations 
 TransformationNode::TransformationNode(transType transformation, Point3D *factor){
 	//transformation = transforms;
 	//factor = values;
 
 	switch (transformation){
 		case SCALE_OBJECT:
-			printf("%f\n", factor->x);
+			//printf("%f\n", factor->x);
 			glScalef(factor->x, factor->y, factor->z);
 			break;
 

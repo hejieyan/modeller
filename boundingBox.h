@@ -2,17 +2,23 @@
 #define BOUNDINGBOX_H
 
 #include "mathLibrary.h"
+#include <algorithm>
+#include <stdio.h>
+
+#include <limits>
 
 class BoundingBox {
 	protected:
-		Point3D *far;
-		Point3D *near;
+		
 
 
 	public:
+		Point3D *far;
+		Point3D *near;
 		BoundingBox(float size);
 		void translateBox(Point3D *translateFactor);
-		void scaleBox(Point3D *scaleFactor);
+		void scaleBox(Point3D *factor);
+		double slabIntersect(double *poi, double *poiD);
 
 };
 
