@@ -29,7 +29,6 @@ class SceneGraph {
 	private:
 		node *root;
 		node *currentNode;
-		// int listLength;
 
 
 	public:

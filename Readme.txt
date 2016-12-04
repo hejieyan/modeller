@@ -1,2 +1,6 @@
-Student #: 	Mohammed Aamir Badruddin	1135157
-			Hejie Yan					1156145
+Comp Sci 3GC3 Assignment #3:
+
+Mohammed Aamir Badruddin	1135157
+Hejie Yan					1156145
+
+Instructions appear when program is run.
