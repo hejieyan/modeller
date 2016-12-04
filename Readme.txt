@@ -1,7 +1,7 @@
 Comp Sci 3GC3 Assignment #3:
 
-Mohammed Aamir Badruddin	1135157
-Hejie Yan					1156145
+1131557		Mohammed Aamir Badruddin
+1156145		Hejie Yan
 
 Instructions appear when program is run.
 
